@@ -1,18 +1,20 @@
 
+/** @param {import("knex").Knex} knex */
 exports.up = function(knex) {
     return knex.schema.createTable('measure_data', function (table) {
-        table.increments('id');
-        table.string('device');
-        table.integer('tempreture_data');
-        table.integer('humid_data');
-        table.integer('light_data');
-        table.timestamp('created_at').notNull();
-        table.timestamp('update_at').notNull();
+        table.increments('id').primary();
+        table.string('device_id', 32).notNullable();
+        table.decimal('temperature', 10, 3).nullable();
+        table.decimal('humidity', 10, 3).nullable();
+        table.decimal('brightness_level', 10, 3).nullable().comment("明→5000,暗→0");
+        table.datetime('created_at').notNullable().defaultTo(knex.fn.now());
+        table.datetime('update_at').notNullable().defaultTo(knex.fn.now());
 
-        table.foreign('device').references('id').inTable('devices');
+        table.foreign('device_id').references('id').inTable('devices').onUpdate('CASCADE').onDelete('RESTRICT');
     })
 };
 
+/** @param {import("knex").Knex} knex */
 exports.down = function(knex) {
     return knex.schema.dropTableIfExists('measure_data');
 };
