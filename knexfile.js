@@ -2,12 +2,13 @@
 
 module.exports = {
   development: {
-    client: 'mysql',
+    client: 'mysql2',
     connection: {
-      host: '127.0.0.1',
-      user: 'root',
-      password: 'password',
-      database: 'db',
+      host: 'db',
+      port: 3306,
+      user: 'user1',
+      password: 'password123456',
+      database: 'db1',
     },
   }
 };

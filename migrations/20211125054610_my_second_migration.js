@@ -6,7 +6,7 @@ exports.up = function(knex) {
         table.string('device_id', 32).notNullable();
         table.decimal('temperature', 10, 3).nullable();
         table.decimal('humidity', 10, 3).nullable();
-        table.decimal('brightness_level', 10, 3).nullable().comment("明→5000,暗→0");
+        table.decimal('brightness_level', 10, 3).nullable().comment("明→0,暗→5000");
         table.datetime('created_at').notNullable().defaultTo(knex.fn.now());
         table.datetime('update_at').notNullable().defaultTo(knex.fn.now());
 

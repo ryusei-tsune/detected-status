@@ -14,13 +14,14 @@
     "cookie-parser": "^1.4.5",
     "core-js": "^3.15.1",
     "express": "^4.17.1",
-    "firebase": "^9.4.1",
     "http-errors": "^1.8.1",
+    "knex": "^0.95.14",
     "moment": "^2.29.1",
     "moment-timezone": "^0.5.34",
     "morgan": "^1.10.0",
+    "mysql2": "^2.3.3",
     "nuxt": "^2.15.7",
-    "pg": "^8.7.1",
+    "vue-google-charts": "^0.3.3",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

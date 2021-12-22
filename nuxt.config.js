@@ -6,7 +6,7 @@ export default {
 
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
-    titleTemplate: '%s - detected-status',
+    titleTemplate: 'detected-status',
     title: 'detected-status',
     htmlAttrs: {
       lang: 'en'
