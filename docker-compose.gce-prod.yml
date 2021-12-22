@@ -36,6 +36,8 @@ services:
       STAGE: 'production' # Don't use production until staging works
       # STAGE: local
       # FORCE_RENEW: 'true'
+    volumes:  
+      - ./https-portal:/var/lib/https-portal
 
   # adminer:
   #   image: adminer

@@ -9,7 +9,7 @@ services:
     stdin_open: true
     stop_signal: SIGKILL
     ports:
-      - 80:3000
+      - 3000:3000
     volumes:
       - ./:/home/node/app
 
@@ -28,14 +28,16 @@ services:
   https-portal:
     image: steveltn/https-portal:1
     ports:
-      # - '80:80'
+      - '80:80'
       - '443:443'
     restart: always
     environment:
       DOMAINS: 'localhost -> http://node:3000'
       # STAGE: 'production' # Don't use production until staging works
       STAGE: local
-      # FORCE_RENEW: 'true'
+      FORCE_RENEW: 'true'
+    volumes:  
+      - ./https-portal:/var/lib/https-portal
 
   # adminer:
   #   image: adminer
