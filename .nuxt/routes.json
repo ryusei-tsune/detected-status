@@ -1,0 +1,16 @@
+[
+  {
+    "name": "devices-deviceId",
+    "path": "/devices/:deviceId",
+    "component": "/home/node/app/pages/devices/_deviceId/index.vue",
+    "chunkName": "pages/devices/_deviceId/index",
+    "_name": "_0391a6ea"
+  },
+  {
+    "name": "index",
+    "path": "/",
+    "component": "/home/node/app/pages/index.vue",
+    "chunkName": "pages/index",
+    "_name": "_1d4b0d3b"
+  }
+]
