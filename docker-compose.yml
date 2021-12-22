@@ -12,6 +12,7 @@ services:
     tty: true
     stdin_open: true
     stop_signal: SIGKILL
+    user: ${U:-root}:${G:-root}
     ports:
       - 3000:3000
     volumes:
