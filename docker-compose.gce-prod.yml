@@ -32,7 +32,7 @@ services:
       - '443:443'
     restart: always
     environment:
-      DOMAINS: 'www.tsune.app -> http://node:3000'
+      DOMAINS: 'tsune.app => www.tsune.app, www.tsune.app -> http://node:3000'
       STAGE: 'production' # Don't use production until staging works
       # STAGE: local
       # FORCE_RENEW: 'true'
