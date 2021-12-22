@@ -1,0 +1,49 @@
+version: "3.9"
+
+services:
+  node:
+    image: node:16-alpine
+    working_dir: /home/node/app
+    command: "npm start"
+    tty: true
+    stdin_open: true
+    stop_signal: SIGKILL
+    # ports:
+    #   - 80:3000
+    volumes:
+      - ./:/home/node/app
+
+  db:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: password123456
+      MYSQL_DATABASE: db1
+      MYSQL_USER: user1
+      MYSQL_PASSWORD: password123456
+    volumes:
+      - db-store:/var/lib/mysql
+
+  https-portal:
+    image: steveltn/https-portal:1
+    ports:
+      - '80:80'
+      - '443:443'
+    restart: always
+    environment:
+      DOMAINS: 'www.tsune.app -> http://node:3000'
+      STAGE: 'production' # Don't use production until staging works
+      # STAGE: local
+      # FORCE_RENEW: 'true'
+
+  # adminer:
+  #   image: adminer
+  #   restart: always
+  #   environment:
+  #     ADMINER_DESIGN: hever
+  #   ports:
+  #     - 8080:8080
+
+volumes:
+  db-store:
