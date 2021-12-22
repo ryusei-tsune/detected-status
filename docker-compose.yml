@@ -2,11 +2,11 @@ version: "3.9"
 
 services:
   node:
-    # image: node:16-alpine
-    image: ryusei1226/detected_status_nodejs
-    build: 
-      context: ./
-      dockerfile: Dockerfile.nodejs
+    image: node:16-alpine
+    # image: ryusei1226/detected_status_nodejs
+    # build: 
+    #   context: ./
+    #   dockerfile: Dockerfile.nodejs
     working_dir: /home/node/app
     command: "/bin/sh"
     tty: true
