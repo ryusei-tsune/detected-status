@@ -1,6 +1,6 @@
 <template>
   <v-container class="px-0" fluid style="max-width: 1400px">
-    <v-card-text  style="font-size:5vmin; text-align: center; font-weight: bold;">状態可視化アプリケーション</v-card-text>
+    <v-card-text  style="font-size:5vmin; text-align: center; font-weight: bold;">状態可視化アプリ</v-card-text>
     <v-card-text></v-card-text>
     <v-card class="mx-auto" max-width="400" tile>
       <div v-for="(item, index) in link" :key="index">

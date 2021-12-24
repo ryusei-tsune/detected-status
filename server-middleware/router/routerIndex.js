@@ -21,8 +21,6 @@ router.post('/measuredData', async (req, res, next) => {
 
 router.get('/devices', async (req, res, next) => {
   try {
-    const headerAuthorization = req.get('Authorization')
-    console.log(headerAuthorization)
     const name = await knex('devices').select('*');
     res.status(200).json({ ok: true, statusText: 'ok.', body: name })
   } catch (err) {

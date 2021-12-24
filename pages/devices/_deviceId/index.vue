@@ -1,7 +1,9 @@
 <template>
   <v-container>
     <!-- {{ $route.params.deviceId }}の詳細 -->
-    <v-card-title v-if="resName"> {{ resName[0].name }}({{ resName[0].id }}) </v-card-title>
+    <v-card-title v-if="resName">
+      {{ resName[0].name }}({{ resName[0].id }})
+    </v-card-title>
     <v-row justify="center">
       <v-col cols="12" style="text-align: center" v-if="temperature">
         temperature
@@ -37,9 +39,41 @@ export default {
   middleware: [],
   data() {
     return {
-      temperatureOptions: { chart: { title: "temperature" }, colors: ['#1b9e77'],  backgroundColor: '#f1f8e9' },
-      humidityOptions: { chart: { title: "humidity" }, colors: ['#d95f02'] },
-      brightness_levelOptions: { chart: { title: "brightness_level" }, colors: ['#7570b3'] },
+      temperatureOptions: {
+        chart: { title: "temperature" },
+        colors: ["#1b9e77"],
+        backgroundColor: "#f1f8e9",
+        vAxis: {
+          title: "気温",
+          // viewWindow: {
+          //   min: -10,
+          //   max: 40,
+          // },
+          ticks: [-15, 0, 15, 30, 45],
+        },
+      },
+      humidityOptions: {
+        chart: { title: "humidity" },
+        colors: ["#d95f02"],
+        vAxis: {
+          title: "湿度",
+          viewWindow: {
+            min: 0,
+            max: 100,
+          },
+        },
+      },
+      brightness_levelOptions: {
+        chart: { title: "brightness_level" },
+        colors: ["#7570b3"],
+        vAxis: {
+          title: "明るさ",
+          viewWindow: {
+            min: 0,
+            max: 5000,
+          },
+        },
+      },
       resData: null,
       resName: null,
       temperature: null,
@@ -63,7 +97,7 @@ export default {
         );
         this.$set(this, "resData", data.body);
         this.$set(this, "resName", data.name);
-        console.log(this.resName)
+        console.log(this.resName);
         this.temperature = [];
         this.humidity = [];
         this.brightness_level = [];
@@ -71,12 +105,13 @@ export default {
         this.humidity.push(["time", "humidity"]);
         this.brightness_level.push(["time", "brightness_level"]);
         this.resData.forEach((row) => {
-          this.temperature.push([row.created_at, Number(row.temperature)]);
-          this.humidity.push([row.created_at, Number(row.humidity)]);
-          this.brightness_level.push([
-            row.created_at,
-            Number(row.brightness_level),
-          ]);
+          var YMD = row.created_at.split("T")[0];
+          var HM = row.created_at.split("T")[1].split(".")[0];
+          var timeInfo = YMD + "\n" + HM;
+          console.log(timeInfo);
+          this.temperature.push([timeInfo, Number(row.temperature)]);
+          this.humidity.push([timeInfo, Number(row.humidity)]);
+          this.brightness_level.push([timeInfo, Number(row.brightness_level)]);
         });
       } catch (err) {
         console.log("getData()", err);
