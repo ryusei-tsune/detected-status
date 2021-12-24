@@ -41,7 +41,7 @@ export default {
     return {
       temperatureOptions: {
         chart: { title: "temperature" },
-        colors: ["#1b9e77"],
+        colors: ["#d95f02"],
         backgroundColor: "#f1f8e9",
         vAxis: {
           title: "気温",
@@ -54,7 +54,7 @@ export default {
       },
       humidityOptions: {
         chart: { title: "humidity" },
-        colors: ["#d95f02"],
+        colors: ["#7570b3"],
         vAxis: {
           title: "湿度",
           viewWindow: {
@@ -65,7 +65,7 @@ export default {
       },
       brightness_levelOptions: {
         chart: { title: "brightness_level" },
-        colors: ["#7570b3"],
+        colors: ["#FFD700"],
         vAxis: {
           title: "明るさ",
           viewWindow: {
