@@ -65,7 +65,7 @@ export default {
       },
       brightness_levelOptions: {
         chart: { title: "brightness_level" },
-        colors: ["#FFD700"],
+        colors: ["#32cd32"],
         vAxis: {
           title: "明るさ",
           viewWindow: {
@@ -105,13 +105,14 @@ export default {
         this.humidity.push(["time", "humidity"]);
         this.brightness_level.push(["time", "brightness_level"]);
         this.resData.forEach((row) => {
-          var YMD = row.created_at.split("T")[0];
-          var HM = row.created_at.split("T")[1].split(".")[0];
-          var timeInfo = YMD + "\n" + HM;
-          console.log(timeInfo);
-          this.temperature.push([timeInfo, Number(row.temperature)]);
-          this.humidity.push([timeInfo, Number(row.humidity)]);
-          this.brightness_level.push([timeInfo, Number(row.brightness_level)]);
+          // var YMD = row.created_at.split("T")[0];
+          // var HM = row.created_at.split("T")[1].split(".")[0];
+          // var date = YMD + "\n" + HM;
+          var date = new Date(row.created_at);
+          console.log(date);
+          this.temperature.push([date, Number(row.temperature)]);
+          this.humidity.push([date, Number(row.humidity)]);
+          this.brightness_level.push([date, Number(row.brightness_level)]);
         });
       } catch (err) {
         console.log("getData()", err);

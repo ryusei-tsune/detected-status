@@ -41,7 +41,6 @@ export default {
       try {
         const { data } = await this.$axios.get("/api/devices");
         this.$set(this, "resData", data.body);
-        console.log(this.resData);
         this.resData.forEach((row) => {
           this.deviceName.push({ MAC: row.id, Name: row.name });
           const url = "/devices/" + row.id;
