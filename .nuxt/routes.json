@@ -2,15 +2,15 @@
   {
     "name": "devices-deviceId",
     "path": "/devices/:deviceId",
-    "component": "/home/node/app/pages/devices/_deviceId/index.vue",
+    "component": "/home/ryusei/Github/ryusei-tsune/detected-status/pages/devices/_deviceId/index.vue",
     "chunkName": "pages/devices/_deviceId/index",
-    "_name": "_0391a6ea"
+    "_name": "_089621b3"
   },
   {
     "name": "index",
     "path": "/",
-    "component": "/home/node/app/pages/index.vue",
+    "component": "/home/ryusei/Github/ryusei-tsune/detected-status/pages/index.vue",
     "chunkName": "pages/index",
-    "_name": "_1d4b0d3b"
+    "_name": "_768ed844"
   }
 ]

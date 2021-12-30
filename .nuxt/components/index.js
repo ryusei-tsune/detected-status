@@ -1,4 +1,4 @@
-export { default as Chart } from '../../components/Chart.vue'
+export const Chart = () => import('../../components/Chart.vue' /* webpackChunkName: "components/chart" */).then(c => wrapFunctional(c.default || c))
 
 // nuxt/nuxt.js#8607
 function wrapFunctional(options) {
