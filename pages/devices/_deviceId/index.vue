@@ -1,20 +1,39 @@
 <template>
   <v-container>
     <!-- {{ $route.params.deviceId }}の詳細 -->
-    <v-card-title v-if="resName">
-      {{ resName[0].name }}({{ resName[0].id }})
-    </v-card-title>
+    <v-row>
+      <v-col cols="12" lg="7">
+        <v-card-title v-if="resName">
+          {{ resName[0].name }}({{ resName[0].id }})
+        </v-card-title>
+      </v-col>
+      <v-col cols="5" lg="2">
+        <DatePick labelString="始まり" :period="true" @setDate="SetDate"></DatePick>
+      </v-col>
+      <v-col cols="5" lg="2">
+        <DatePick labelString="終わり" :period="false" @setDate="SetDate"></DatePick>
+      </v-col>
+      <v-col cols="2" lg="1">
+        
+      </v-col>
+    </v-row>
     <v-row justify="center">
       <v-col cols="12" style="text-align: center" v-if="temperature">
-        temperature
+        <v-card-text class="item-text" style="color: tomato">
+          温度
+        </v-card-text>
         <Chart :data="temperature" :chartOptions="temperatureOptions" />
       </v-col>
       <v-col cols="12" style="text-align: center" v-if="humidity">
-        humidity
+        <v-card-text class="item-text" style="color: deepskyblue">
+          湿度
+        </v-card-text>
         <Chart :data="humidity" :chartOptions="humidityOptions" />
       </v-col>
       <v-col cols="12" style="text-align: center" v-if="brightness_level">
-        brightness_level
+        <v-card-text class="item-text" style="color: orange">
+          明るさ
+        </v-card-text>
         <Chart
           :data="brightness_level"
           :chartOptions="brightness_levelOptions"
@@ -24,7 +43,8 @@
   </v-container>
 </template>
 <script>
-import Chart from "@/components/Chart.vue";
+import Chart from "~/components/devices/Chart.vue";
+import DatePick from "@/components/devices/DatePick.vue";
 //import Chart from "../../../components/Chart.vue";
 export default {
   head() {
@@ -35,6 +55,7 @@ export default {
   layout: "default",
   components: {
     Chart,
+    DatePick,
   },
   middleware: [],
   data() {
@@ -55,6 +76,7 @@ export default {
       humidityOptions: {
         chart: { title: "humidity" },
         colors: ["#7570b3"],
+        backgroundColor: "#f1f8e9",
         vAxis: {
           title: "湿度",
           viewWindow: {
@@ -66,6 +88,7 @@ export default {
       brightness_levelOptions: {
         chart: { title: "brightness_level" },
         colors: ["#32cd32"],
+        backgroundColor: "#f1f8e9",
         vAxis: {
           title: "明るさ",
           viewWindow: {
@@ -79,6 +102,10 @@ export default {
       temperature: null,
       humidity: null,
       brightness_level: null,
+      start: true,
+      end: false,
+      startDate: null,
+      endDate: null,
     };
   },
   watch: {},
@@ -97,7 +124,7 @@ export default {
         );
         this.$set(this, "resData", data.body);
         this.$set(this, "resName", data.name);
-        console.log(this.resName);
+
         this.temperature = [];
         this.humidity = [];
         this.brightness_level = [];
@@ -105,11 +132,7 @@ export default {
         this.humidity.push(["time", "humidity"]);
         this.brightness_level.push(["time", "brightness_level"]);
         this.resData.forEach((row) => {
-          // var YMD = row.created_at.split("T")[0];
-          // var HM = row.created_at.split("T")[1].split(".")[0];
-          // var date = YMD + "\n" + HM;
           var date = new Date(row.created_at);
-          console.log(date);
           this.temperature.push([date, Number(row.temperature)]);
           this.humidity.push([date, Number(row.humidity)]);
           this.brightness_level.push([date, Number(row.brightness_level)]);
@@ -118,8 +141,20 @@ export default {
         console.log("getData()", err);
       }
     },
+    SetDate(date, period) {
+      console.log(period)
+      if (period){
+        this.startDate = date
+      }
+      else{
+        this.endDate = date
+      }
+    }
   },
 };
 </script>
 <style scoped>
+.item-text {
+  font-size: 25px;
+}
 </style>
