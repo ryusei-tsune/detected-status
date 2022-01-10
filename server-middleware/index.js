@@ -3,6 +3,7 @@ const logger = require('morgan')
 const app = express()
 const createError = require('http-errors')
 const cookieParser = require('cookie-parser')
+import './plugin/dayjsInitializer'
 
 app.use(cookieParser())
 app.use(express.json())

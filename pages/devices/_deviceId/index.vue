@@ -8,13 +8,21 @@
         </v-card-title>
       </v-col>
       <v-col cols="5" lg="2">
-        <DatePick labelString="始まり" :period="true" @setDate="SetDate"></DatePick>
+        <DatePick
+          labelString="始まり"
+          :period="true"
+          @setDate="SetDate"
+        ></DatePick>
       </v-col>
       <v-col cols="5" lg="2">
-        <DatePick labelString="終わり" :period="false" @setDate="SetDate"></DatePick>
+        <DatePick
+          labelString="終わり"
+          :period="false"
+          @setDate="SetDate"
+        ></DatePick>
       </v-col>
       <v-col cols="2" lg="1">
-        
+        <v-btn @click="Filter()"> 絞り込み </v-btn>
       </v-col>
     </v-row>
     <v-row justify="center">
@@ -119,12 +127,20 @@ export default {
   methods: {
     async getData() {
       try {
-        const { data } = await this.$axios.get(
-          "/api/devices/" + this.$route.params.deviceId + "/measured-data"
-        );
+        const queryStart = this.$route.query.start;
+        const queryEnd = this.$route.query.end;
+        console.log(queryStart);
+        console.log(queryEnd);
+        let url;
+        if (queryStart && queryEnd) {
+          url = `/api/devices/${this.$route.params.deviceId}/measured-data/span/${queryStart}/${queryEnd}`;
+        } else {
+          url = `/api/devices/${this.$route.params.deviceId}/measured-data`;
+        }
+        const { data } = await this.$axios.get(url);
         this.$set(this, "resData", data.body);
         this.$set(this, "resName", data.name);
-
+        console.log(data);
         this.temperature = [];
         this.humidity = [];
         this.brightness_level = [];
@@ -139,17 +155,26 @@ export default {
         });
       } catch (err) {
         console.log("getData()", err);
+        console.log(err?.response?.data);
       }
     },
     SetDate(date, period) {
-      console.log(period)
-      if (period){
-        this.startDate = date
+      console.log(period);
+      if (period) {
+        this.startDate = date;
+      } else {
+        this.endDate = date;
       }
-      else{
-        this.endDate = date
-      }
-    }
+    },
+    async Filter() {
+      await this.$router.replace({
+        path: `/devices/${this.$route.params.deviceId}/`,
+        query: { start: this.startDate, end: this.endDate },
+      });
+      this.$nextTick(() => {
+        this.getData();
+      });
+    },
   },
 };
 </script>
