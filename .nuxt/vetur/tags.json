@@ -1,11 +1,11 @@
 {
+  "IndexEdit": {
+    "description": "Auto imported from components/index/Edit.vue"
+  },
   "DevicesChart": {
     "description": "Auto imported from components/devices/Chart.vue"
   },
   "DevicesDatePick": {
     "description": "Auto imported from components/devices/DatePick.vue"
-  },
-  "IndexEdit": {
-    "description": "Auto imported from components/index/Edit.vue"
   }
 }
