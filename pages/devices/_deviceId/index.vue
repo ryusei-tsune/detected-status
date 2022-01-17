@@ -80,6 +80,7 @@ export default {
           // },
           ticks: [-15, 0, 15, 30, 45],
         },
+        pointSize: 5,
       },
       humidityOptions: {
         chart: { title: "humidity" },
@@ -92,6 +93,7 @@ export default {
             max: 100,
           },
         },
+        pointSize: 5,
       },
       brightness_levelOptions: {
         chart: { title: "brightness_level" },
@@ -104,6 +106,7 @@ export default {
             max: 5000,
           },
         },
+        pointSize: 5,
       },
       resData: null,
       resName: null,
@@ -133,7 +136,7 @@ export default {
         console.log(queryEnd);
         let url;
         if (queryStart && queryEnd) {
-          url = `/api/devices/${this.$route.params.deviceId}/measured-data/span/${queryStart}/${queryEnd}`;
+          url = `/api/devices/${this.$route.params.deviceId}/measured-data/span/${queryStart}/${queryEnd}/?tz=Asia/Tokyo`;
         } else {
           url = `/api/devices/${this.$route.params.deviceId}/measured-data`;
         }

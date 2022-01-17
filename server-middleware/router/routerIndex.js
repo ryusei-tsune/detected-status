@@ -61,9 +61,10 @@ console.log(dayjs.tz('2021-07-03 00:00:00', 'America/New_York').format())
 router.get('/devices/:deviceId/measured-data/span/:startDate(\\d{4}-\\d{2}-\\d{2})/:endDate(\\d{4}-\\d{2}-\\d{2})', async (req, res, next) => {
   try {
     const tz = req.query.tz || 'utc'
+    console.log(tz)
     const startDate = dayjs.tz(`${req.params.startDate} 00:00:00`, tz)
-    const endDate = dayjs.tz(`${req.params.endDate} 00:00:00`, tz)
-    const data = await knex('measure_data').select('*').where('device_id', req.params.deviceId).andWhere('created_at', '>', startDate.toDate()).andWhere('created_at', '<', endDate.toDate());
+    const endDate = dayjs.tz(`${req.params.endDate} 23:59:59`, tz)
+    const data = await knex('measure_data').select('*').where('device_id', req.params.deviceId).andWhere('created_at', '>=', startDate.toDate()).andWhere('created_at', '<=', endDate.toDate());
     const name = await knex('devices').select('*').where('id', req.params.deviceId)
     // const name = await knex('devices').select('*');
     console.log("params", req.params);
