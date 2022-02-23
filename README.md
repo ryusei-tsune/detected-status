@@ -1,69 +1,73 @@
-# detected-status
+# 部屋の状態可視化アプリケーション
 
-## Build Setup
+このプロジェクトは部屋の温度、湿度、明るさを検出し、DB に登録します。ブラウザでは、DB に登録されているデータをグラフ化します。
+
+利用技術は、フロントエンドには nuxt.js、サーバサイドには Node.js、DBには MySQL を利用しています。
+
+このプロジェクトは GCP (Google Cloud Platform) で VM インスタンスを使用し、Docker環境を構築しています。その環境内で本プロジェクトを公開しています。 
+
+## Setup
+このプロジェクトでは開発時に Docker 環境で実行することを想定しています。また、 Windows ユーザーは WSL2 環境に Docker が利用可能できることを前提としています。
+
+開発時は、 `docker-compose` により Node.js 環境と MySQL の環境が起動します。起動後、Node.js サービスに接続(`docker-compose exec node sh` コマンドを使用)し、サーバーを起動する流れとなります。
+初回実行時は、 `npm install` による依存関係のインストールが必要です。
+
+### 初回実行時
 
 ```bash
-# install dependencies
-$ npm install
-
+# イメージをビルドする
+$ docker-compose build
+# 開発環境用のサービスを起動する
+$ bash run.sh up
+# Node.js サービスに接続する
+$ bash run.sh sh
+# >>> コンテナに接続されます
+# 依存関係のインストール
+~/app $ npm install
+# 開発環境モードでサーバを起動
 # serve with hot reload at localhost:3000
-$ npm run dev
-
-# build for production and launch server
-$ npm run build
-$ npm run start
-
-# generate static project
-$ npm run generate
+~/app $ npm run dev
+# 終了時
+# [Ctrl] + [C]
+~/app $ exit
+# >>> コンテナ環境から抜け出します
+# Docker サービスを終了する
+$ bash run.sh down
 ```
 
-For detailed explanation on how things work, check out the [documentation](https://nuxtjs.org).
+### 開発時( 2 回目以降)
 
-## Special Directories
+```bash
+# 開発環境用のサービスを起動する
+$ bash run.sh up
+# Node.js サービスに接続する
+$ bash run.sh sh
+# >>> コンテナに接続されます
+# 開発環境モードでサーバを起動
+# serve with hot reload at localhost:3000
+~/app $ npm run dev
+# 終了時
+# [Ctrl] + [C]
+~/app $ exit
+# >>> コンテナ環境から抜け出します
+# Docker サービスを終了する
+$ bash run.sh down
+```
 
-You can create the following extra directories, some of which have special behaviors. Only `pages` is required; you can delete them if you don't want to use their functionality.
+### 本番環境での起動
 
-### `assets`
-
-The assets directory contains your uncompiled assets such as Stylus or Sass files, images, or fonts.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/assets).
-
-### `components`
-
-The components directory contains your Vue.js components. Components make up the different parts of your page and can be reused and imported into your pages, layouts and even other components.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/components).
-
-### `layouts`
-
-Layouts are a great help when you want to change the look and feel of your Nuxt app, whether you want to include a sidebar or have distinct layouts for mobile and desktop.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/layouts).
-
-
-### `pages`
-
-This directory contains your application views and routes. Nuxt will read all the `*.vue` files inside this directory and setup Vue Router automatically.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/get-started/routing).
-
-### `plugins`
-
-The plugins directory contains JavaScript plugins that you want to run before instantiating the root Vue.js Application. This is the place to add Vue plugins and to inject functions or constants. Every time you need to use `Vue.use()`, you should create a file in `plugins/` and add its path to plugins in `nuxt.config.js`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/plugins).
-
-### `static`
-
-This directory contains your static files. Each file inside this directory is mapped to `/`.
-
-Example: `/static/robots.txt` is mapped as `/robots.txt`.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/static).
-
-### `store`
-
-This directory contains your Vuex store files. Creating a file in this directory automatically activates Vuex.
-
-More information about the usage of this directory in [the documentation](https://nuxtjs.org/docs/2.x/directory-structure/store).
+```bash
+# VM インスタンス内で Docker 環境を構築後
+# イメージをビルドする
+$ docker-compose build
+# 依存関係のインストール
+$ npm install
+# ビルドする（distフォルダが作成される）
+$ npm run build
+# サービスを起動する
+$ bash run.sh up-prod
+# 起動したコンテナの Log を確認
+$ bash run.sh logs-prod
+# Docker サービスを終了する
+$ bash run.sh down-prod
+```
